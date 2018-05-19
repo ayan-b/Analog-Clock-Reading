@@ -1,6 +1,6 @@
 /* **** To Do ********
- * 1. Add an analog clock with golden colour,
- * 2. Add glossiness,
+ * 1. Add an analog clock with golden colour [done],
+ * 2. Add glossiness [done],
  * 3. Add quiz with showing hints capability,
  * 4. Add world clock
  * 
@@ -35,456 +35,462 @@ function addLights(){
 	
 	}
 	
-	var settingsDefault = {
-		cameraAngle: 45,
-		cameraDistanceNear: 10,
-		cameraDistanceFar: 10000,
-		cameraX: 0,
-		cameraY: 0,
-		cameraZ: 650,
-		cameraLookX: 0,
-		cameraLookY: 0,
-		cameraLookZ: 0,
-	
-		lightX: 80,
-		lightY: 80,
-		lightZ: 80,
-	
-		lightShadowCameraSideWidth: 512,
-		lightShadowCameraDistanceFar: 400,
-		lightShadowDarkness: 0.4,
-		lightShadowBias:.0001,
-		lightShadowCameraVisible: false,
-	
-		minutesNumber: 60,
-		radius: 100,
-		radiusSmall: 3,
-		radiusSmallest: 2,
-		depthWrapper: 10,
-		depthFace: 16,
-		bigRadius: 110,
-		lineLengthShortest: 10,
-		lineLengthShort: 20,
-		lineWidthShortest: 1,
-		lineWidthShort: 5,
-		lineWidthHandHour: 5,
-		lineWidthHandMinute: 5,
-		lineWidthHandSecond: 1,
-		spacing: 5,
-		spacingHand: 15,
-		handHourLength: 1,
-		handMinuteLength: 1,
-		handSecondLength: 1,
-	
-		floorShown: true,
-		floorSideWidth: 1000,
-		floorZ: -11,
-	
-		colorFloor: 0x000000,
-		colorClock: 0xffffff,
-		colorClockWrapper: 0x323232,
-		lineColor: 0x000000,
-		lineShortColor: 0x000000,
-		handHourColor: 0x000000,
-		handHourColor: 0x000000,
-		handMinuteColor: 0x000000,
-		handSecondColor: 0xFF0000,
-		handSecondCircleColor: 0xFF0000,
-	
-		spindleColor: 0xFFFFFF
+var settingsDefault = {
+
+	cameraAngle: 45,
+	cameraDistanceNear: 10,
+	cameraDistanceFar: 10000,
+	cameraX: 0,
+	cameraY: 0,
+	cameraZ: 650,
+	cameraLookX: 0,
+	cameraLookY: 0,
+	cameraLookZ: 0,
+
+	lightX: 80,
+	lightY: 80,
+	lightZ: 80,
+
+	lightShadowCameraSideWidth: 512,
+	lightShadowCameraDistanceFar: 400,
+	lightShadowDarkness: 0.4,
+	lightShadowBias:.0001,
+	lightShadowCameraVisible: false,
+
+	minutesNumber: 60,
+	radius: 100,
+	radiusSmall: 3,
+	radiusSmallest: 2,
+	depthWrapper: 10,
+	depthFace: 16,
+	bigRadius: 110,
+	lineLengthShortest: 10,
+	lineLengthShort: 20,
+	lineWidthShortest: 1,
+	lineWidthShort: 5,
+	lineWidthHandHour: 5,
+	lineWidthHandMinute: 5,
+	lineWidthHandSecond: 1,
+	spacing: 5,
+	spacingHand: 15,
+	handHourLength: 1,
+	handMinuteLength: 1,
+	handSecondLength: 1,
+
+	floorShown: true,
+	floorSideWidth: 1000,
+	floorZ: -11,
+
+	colorFloor: 0x000000,
+	colorClock: 0xffffff,
+	colorClockWrapper: 0x323232,
+	lineColor: 0x000000,
+	lineShortColor: 0x000000,
+	handHourColor: 0x000000,
+	handHourColor: 0x000000,
+	handMinuteColor: 0x000000,
+	handSecondColor: 0xFF0000,
+	handSecondCircleColor: 0xFF0000,
+
+	spindleColor: 0xFFFFFF
+
 	};
-	var settings = {};
+
+var settings = {};
 	
-	settingsDefault.handHourLength = settingsDefault.radius - 40;
-	settingsDefault.handMinuteLength = settingsDefault.radius - 20;
-	settingsDefault.handSecondLength = settingsDefault.radius - 10;
-	
-	for (var prop in settingsDefault) {
-		if (settingsDefault.hasOwnProperty(prop)) {
-			settings[prop] = settingsDefault[prop];
-		}
+settingsDefault.handHourLength = settingsDefault.radius - 40;
+settingsDefault.handMinuteLength = settingsDefault.radius - 20;
+settingsDefault.handSecondLength = settingsDefault.radius - 10;
+
+for (var prop in settingsDefault) {
+
+	if (settingsDefault.hasOwnProperty(prop)) {
+
+		settings[prop] = settingsDefault[prop];
+
 	}
-	
-	var scene = new THREE.Scene();
-	var camera = new THREE.PerspectiveCamera(
-		settings.cameraAngle,
-		window.innerWidth / window.innerHeight,
-		settings.cameraDistanceNear,
-		settings.cameraDistanceFar
-	);
-	camera.position.x = settings.cameraX;
-	camera.position.y = settings.cameraY;
-	camera.position.z = settings.cameraZ;
-	
-	camera.lookAt({
-		x: settings.cameraLookX,
-		y: settings.cameraLookY,
-		z: settings.cameraLookZ
-	});
-	
-	var renderer = new THREE.WebGLRenderer();
-	
+
+}
+
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(
+	settings.cameraAngle,
+	window.innerWidth / window.innerHeight,
+	settings.cameraDistanceNear,
+	settings.cameraDistanceFar
+);
+camera.position.x = settings.cameraX;
+camera.position.y = settings.cameraY;
+camera.position.z = settings.cameraZ;
+
+camera.lookAt({
+	x: settings.cameraLookX,
+	y: settings.cameraLookY,
+	z: settings.cameraLookZ
+});
+
+var renderer = new THREE.WebGLRenderer();
+
 	//Add responsiveness
-	renderer.setSize( window.innerWidth, window.innerHeight );
-	
-	renderer.shadowMap.enabled = true;
-	renderer.shadowMapSoft = true;
-	
-	document.body.appendChild( renderer.domElement );
-	
-	var group = new THREE.Group();
-	group.position.y = 50;
-	
-	scene.add( group );
-	
-	var ambientLight = new THREE.AmbientLight( "white", 0.5 );
-	//scene.add( ambientLight );
+renderer.setSize( window.innerWidth, window.innerHeight );
+
+renderer.shadowMap.enabled = true;
+renderer.shadowMapSoft = true;
+
+document.body.appendChild( renderer.domElement );
+
+var group = new THREE.Group();
+group.position.y = 50;
+
+scene.add( group );
+
+var ambientLight = new THREE.AmbientLight( "white", 0.5 );
+//scene.add( ambientLight );
 
 
-	var lightAmbient;
-	lightAmbient = new THREE.AmbientLight(0xFFFFFF, 0.2);
-	scene.add(lightAmbient);
-	
-	var light;
-	light = new THREE.DirectionalLight(0xFFFFFF, 1.5);
-	light.position.set(
-		//-335, 0, 2
-		settings.lightX,
-		settings.lightY,
-		settings.lightZ
-	);
-	
-	light.castShadow = true;
-	//light.shadowCameraVisible = settings.lightShadowCameraVisible;
-	
-	light.shadow.mapSize.width = 2048;
-	light.shadow.mapSize.height = 2048;
-	
-	light.shadow.camera.left = -settings.lightShadowCameraSideWidth;
-	light.shadow.camera.right = settings.lightShadowCameraSideWidth;
-	light.shadow.camera.top = settings.lightShadowCameraSideWidth;
-	light.shadow.camera.bottom = -settings.lightShadowCameraSideWidth;
-	
-	light.shadow.camera.far = settings.lightShadowCameraDistanceFar;
-	//light.shadowDarkness = settings.lightShadowDarkness;
-	light.shadow.bias = settings.lightShadowBias;
-	
-	scene.add(light);
+var lightAmbient;
+lightAmbient = new THREE.AmbientLight(0xFFFFFF, 0.2);
+scene.add(lightAmbient);
 
-	var path = "textures/SwedishRoyalCastle/";
-	var format = '.jpg';
-	var urls = [
-			path + 'px' + format, path + 'nx' + format,
-			path + 'py' + format, path + 'ny' + format,
-			path + 'pz' + format, path + 'nz' + format
-		];
+var light;
+light = new THREE.DirectionalLight(0xFFFFFF, 1.5);
+light.position.set(
+	//-335, 0, 2
+	settings.lightX,
+	settings.lightY,
+	settings.lightZ
+);
 
-	// var reflectionCube = new THREE.CubeTextureLoader().load( urls );
-	// reflectionCube.format = THREE.RGBFormat;
+light.castShadow = true;
 
-	textureCube = new THREE.CubeTextureLoader().load( urls );
-	textureCube.format = THREE.RGBFormat;
-	textureCube.mapping = THREE.CubeReflectionMapping;
+light.shadow.mapSize.width = 2048;
+light.shadow.mapSize.height = 2048;
 
-	var cubeShader = THREE.ShaderLib[ "cube" ];
-	var cubeMaterial = new THREE.ShaderMaterial( {
-		fragmentShader: cubeShader.fragmentShader,
-		vertexShader: cubeShader.vertexShader,
-		uniforms: cubeShader.uniforms,
-		depthWrite: false,
-		side: THREE.BackSide
-	} );
-	cubeMaterial.uniforms[ "tCube" ].value = textureCube;
+light.shadow.camera.left = -settings.lightShadowCameraSideWidth;
+light.shadow.camera.right = settings.lightShadowCameraSideWidth;
+light.shadow.camera.top = settings.lightShadowCameraSideWidth;
+light.shadow.camera.bottom = -settings.lightShadowCameraSideWidth;
 
-	//cubeMesh = new THREE.Mesh( new THREE.BoxBufferGeometry( 1000, 1000, 1000 ), cubeMaterial );
-	//scene.add( cubeMesh );
-	
-	var materials = {
-		floor: new THREE.MeshPhongMaterial(
-			{
-				color      :  new THREE.Color("rgb(50,50,30)"),
-				emissive   :  new THREE.Color("rgb(7,3,5)"),
-				specular   :  new THREE.Color("rgb(19,10,4)"),
-				specularMap    :  new THREE.TextureLoader().load("obj/wood1.jpg", {}, function(){}),
-				shininess  :  100,
-				bumpMap    :  new THREE.TextureLoader().load("obj/wood1.jpg", {}, function(){}),
-				map        :  new THREE.TextureLoader().load("obj/wood1.jpg", {}, function(){}),
-				bumpScale  :  2.5,
-				shininess  :  10,
-				//shading: THREE.FlatShading,
-				side: THREE.DoubleSide
-			}
-		),
-		clockWrapper: new THREE.MeshPhongMaterial(
-			{
-				color: settings.colorClockWrapper,
-				shininess: 100,
-				shading: THREE.FlatShading,
-				side: THREE.DoubleSide,
-				alphaMap : new THREE.TextureLoader().load("obj/scratched_glass.jpg"),
-				bumpMap  : new THREE.TextureLoader().load("obj/scratched_glass.jpg"),
-			}
-		),
-		// clock: new THREE.MeshPhongMaterial(
-		// 	{
-		// 		color: settings.colorClock,
-		// 		shininess: 10,
-		// 		shading: THREE.FlatShading,
-		// 		//map: new THREE.TextureLoader().load("textures/dial12.jpg")
-		// 	}
-		// ),
-		glass: new THREE.MeshPhongMaterial(
-			{
+light.shadow.camera.far = settings.lightShadowCameraDistanceFar;
+light.shadow.bias = settings.lightShadowBias;
 
-				color: settings.colorClock,
-				shininess: 10,
-				shading: THREE.FlatShading, 
-				map: new THREE.TextureLoader().load("textures/dial12.jpg"),
-				side: THREE.DoubleSide,
-				alphaMap : new THREE.TextureLoader().load("obj/scratched_glass.jpg", {}, function(){}),
-				bumpMap    :  new THREE.TextureLoader().load("obj/scratched_glass.jpg", {}, function(){}),
-				bumpScale  :  0.01,
-				transparent: true,
-				color: 0xaa8822, 
-				envMap: textureCube, 
-				combine: THREE.MixOperation, 
-				reflectivity: 0.5,
+scene.add(light);
 
-			}
-		),
-		line: new THREE.MeshPhongMaterial(
-			{
-				color: settings.lineColor,
-				shininess: 10,
-				shading: THREE.FlatShading
-			}
-		),
-		lineShort: new THREE.MeshPhongMaterial(
-			{
-				color: settings.lineShortColor,
-				shininess: 10,
-				shading: THREE.FlatShading
-			}
-		),
-		handHour: new THREE.MeshPhongMaterial(
-			{
-				color: settings.handHourColor,
-				shininess: 10,
-				shading: THREE.FlatShading
-			}
-		),
-		handMinute: new THREE.MeshPhongMaterial(
-			{
-				color: settings.handMinuteColor,
-				shininess: 10,
-				shading: THREE.FlatShading
-			}
-		),
-		handSecond: new THREE.MeshPhongMaterial(
-			{
-				color: settings.handSecondColor,
-				shininess: 10,
-				shading: THREE.FlatShading
-			}
-		),
-		handSecondCircle: new THREE.MeshPhongMaterial(
-			{
-				color: settings.handSecondCircleColor,
-				shininess: 10,
-				shading: THREE.FlatShading
-			}
-		),
-		spindle: new THREE.MeshPhongMaterial(
-			{
-				color: settings.spindleColor,
-				shininess: 10,
-				shading: THREE.FlatShading
-			}
-		),
-		read: new THREE.MeshPhongMaterial(
-			{
-				color      :  new THREE.Color("rgb(50,50,50)"),
-				emissive   :  new THREE.Color("rgb(7,3,5)"),
-				specular   :  new THREE.Color("rgb(20,20,20)"),
-				shininess  :  20,
-				map        :  new THREE.TextureLoader().load("obj/read_old.jpg", {}, function(){}),
-				bumpMap    :  new THREE.TextureLoader().load("obj/read.png"),
-				bumpScale  :  1
-			}
-		)
-	};
-	
-	// Floor
+var path = "textures/SwedishRoyalCastle/";
+var format = '.jpg';
+var urls = [
+		path + 'px' + format, path + 'nx' + format,
+		path + 'py' + format, path + 'ny' + format,
+		path + 'pz' + format, path + 'nz' + format
+	];
 
-	var oldWall = [];
-	var wallWidth = 1000;
-	var nWalls = 4;
+// var reflectionCube = new THREE.CubeTextureLoader().load( urls );
+// reflectionCube.format = THREE.RGBFormat;
 
-	for(var i = 0; i < nWalls; i++){
-		for(var j = 0; j < nWalls; j++){
-			oldWall[i] = new THREE.Mesh( new THREE.PlaneBufferGeometry(wallWidth,wallWidth,1,1), materials.floor );
-			oldWall[i].castShadow = false;
-			oldWall[i].receiveShadow = true;
-			oldWall[i].position.x = -wallWidth + (i-1)*wallWidth;
-			oldWall[i].position.y = -wallWidth + (j-1)*wallWidth;
-			oldWall[i].translateZ(settings.floorZ);
-			group.add( oldWall[i] );
+textureCube = new THREE.CubeTextureLoader().load( urls );
+textureCube.format = THREE.RGBFormat;
+textureCube.mapping = THREE.CubeReflectionMapping;
+
+var cubeShader = THREE.ShaderLib[ "cube" ];
+var cubeMaterial = new THREE.ShaderMaterial( {
+	fragmentShader: cubeShader.fragmentShader,
+	vertexShader: cubeShader.vertexShader,
+	uniforms: cubeShader.uniforms,
+	depthWrite: false,
+	side: THREE.BackSide
+} );
+cubeMaterial.uniforms[ "tCube" ].value = textureCube;
+
+//cubeMesh = new THREE.Mesh( new THREE.BoxBufferGeometry( 1000, 1000, 1000 ), cubeMaterial );
+//scene.add( cubeMesh );
+
+var materials = {
+
+	floor: new THREE.MeshPhongMaterial({
+		
+			color      :  new THREE.Color("rgb(50,50,30)"),
+			emissive   :  new THREE.Color("rgb(7,3,5)"),
+			specular   :  new THREE.Color("rgb(19,10,4)"),
+			specularMap    :  new THREE.TextureLoader().load("obj/wood1.jpg", {}, function(){}),
+			shininess  :  100,
+			bumpMap    :  new THREE.TextureLoader().load("obj/wood1.jpg", {}, function(){}),
+			map        :  new THREE.TextureLoader().load("obj/wood1.jpg", {}, function(){}),
+			bumpScale  :  2.5,
+			shininess  :  10,
+			//shading: THREE.FlatShading,
+			side: THREE.DoubleSide
 		}
-	}
-	
-	var clockWrapperGeometry = new THREE.TorusBufferGeometry(settings.bigRadius, 8, 10, 128);
-	var clockWrapper = new THREE.Mesh( clockWrapperGeometry, materials.clockWrapper );
-	clockWrapper.castShadow = true;
-	group.add( clockWrapper );
-	
-	var clockGeometry = new THREE.CylinderBufferGeometry(settings.radius, settings.radius, settings.depthFace, 360);
-	var clock = new THREE.Mesh( clockGeometry, materials.glass );
-	clock.translateZ(0);
-	clock.rotateX(Math.PI / 2);
-	clock.castShadow = true;
-	clock.receiveShadow = true;
-	group.add( clock );
-
-	var glassGeometry = new THREE.ConeBufferGeometry(settings.radius, 50, 100, 360);
-	var glassMesh = new THREE.Mesh(glassGeometry, materials.glass );
-	glassMesh.castShadow = false;
-	glassMesh.receiveShadow = true;
-	glassMesh.rotateX(Math.PI / 2);
-	//group.add( glassMesh );
-	glassMesh.position.set (0,0,25);
-	
-	
-	var shortLines = [];
-	
-	for (var i = 0; i < settings.minutesNumber; i++) {
-		var lineGeometry = null;
-		var line = null;
-		var lineParent = new THREE.Group();
-		var lineAngle = (6 * Math.PI * i) / 180;
-	
-		lineParent.rotateZ(lineAngle);
-	
-		if(i % 5 === 0) {
-			lineGeometry = new THREE.BoxBufferGeometry( settings.lineWidthShort, settings.lineLengthShort, 1);
-			line = new THREE.Mesh( lineGeometry, materials.line );
-			line.translateOnAxis(new THREE.Vector3( 0, 1, 0 ), settings.radius - settings.lineLengthShort / 2 - settings.spacing );
-			line.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 );
-		} else {
-			lineGeometry = new THREE.BoxBufferGeometry( settings.lineWidthShortest, settings.lineLengthShortest, 1);
-			line = new THREE.Mesh( lineGeometry, materials.lineShort );
-			line.translateOnAxis(new THREE.Vector3( 0, 1, 0 ), settings.radius - settings.lineLengthShortest / 2 - settings.spacing );
-			line.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 );
+	),
+	clockWrapper: new THREE.MeshPhongMaterial(
+		{
+			color: settings.colorClockWrapper,
+			shininess: 100,
+			shading: THREE.FlatShading,
+			side: THREE.DoubleSide,
+			alphaMap : new THREE.TextureLoader().load("obj/scratched_glass.jpg"),
+			bumpMap  : new THREE.TextureLoader().load("obj/scratched_glass.jpg"),
 		}
-	
-		lineParent.add(line);
-	
-		line.castShadow = true;
-		line.receiveShadow = true;
-	
-		shortLines.push(line);
-		group.add( lineParent );
-	
-	}
-	
-	settings.spacing = settings.radius - settings.lineLengthShort / 2 - settings.spacing;
-	
-	var boxGeometry3 = new THREE.BoxBufferGeometry( settings.lineWidthHandHour, settings.handHourLength, 1);
-	var boxGeometry4 = new THREE.BoxBufferGeometry( settings.lineWidthHandMinute, settings.handMinuteLength, 1);
-	var boxGeometry5 = new THREE.BoxBufferGeometry( settings.lineWidthHandSecond, settings.handSecondLength, 1);
+	),
+	// clock: new THREE.MeshPhongMaterial(
+	// 	{
+	// 		color: settings.colorClock,
+	// 		shininess: 10,
+	// 		shading: THREE.FlatShading,
+	// 		//map: new THREE.TextureLoader().load("textures/dial12.jpg")
+	// 	}
+	// ),
+	glass: new THREE.MeshPhongMaterial(
+		{
 
-	var handHourParent = new THREE.Object3D();
-	var handMinuteParent = new THREE.Object3D();
-	var handSecondParent = new THREE.Object3D();
-	
-	var handHour = new THREE.Mesh( boxGeometry3, materials.handHour );
-	handHour.castShadow = true;
-	handHour.receiveShadow = true;
+			color: settings.colorClock,
+			shininess: 10,
+			shading: THREE.FlatShading, 
+			map: new THREE.TextureLoader().load("textures/dial12.jpg"),
+			side: THREE.DoubleSide,
+			alphaMap : new THREE.TextureLoader().load("obj/scratched_glass.jpg", {}, function(){}),
+			bumpMap    :  new THREE.TextureLoader().load("obj/scratched_glass.jpg", {}, function(){}),
+			bumpScale  :  0.01,
+			transparent: true,
+			color: 0xaa8822, 
+			envMap: textureCube, 
+			combine: THREE.MixOperation, 
+			reflectivity: 0.5,
 
-	var handMinute = new THREE.Mesh( boxGeometry4, materials.handMinute );
-	handMinute.castShadow = true;
-	handMinute.receiveShadow = true;
-	
-	var handSecond = new THREE.Mesh( boxGeometry5, materials.handSecond );
-	handSecond.castShadow = true;
-	handSecond.receiveShadow = true;
-	
-	handHourParent.add(handHour);
-	handMinuteParent.add(handMinute);
-	handSecondParent.add(handSecond);
-	
-	handHour.translateOnAxis(new THREE.Vector3( 0, 1, 0 ), settings.handHourLength / 2 - settings.spacingHand );
-	handMinute.translateOnAxis(new THREE.Vector3( 0, 1, 0 ), settings.handMinuteLength / 2 - settings.spacingHand );
-	handSecond.translateOnAxis(new THREE.Vector3( 0, 1, 0 ), settings.handSecondLength / 2 - settings.spacingHand );
-	
-	handHour.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 + 2 );
-	handMinute.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 + 3 );
-	handSecond.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 + 4 );
-	
-	group.add( handHourParent );
-	group.add( handMinuteParent );
-	group.add( handSecondParent );
-	
-	var circleGeometry3 = new THREE.CircleBufferGeometry(settings.radiusSmall, 360 );
-	var circle3 = new THREE.Mesh( circleGeometry3, materials.handSecondCircle);
-	circle3.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 + 5 );
-	group.add( circle3 );
-	
-	var circleGeometry4 = new THREE.CircleBufferGeometry(settings.radiusSmallest, 360 );
-	var circle4 = new THREE.Mesh( circleGeometry4, materials.spindle);
-	circle4.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 + 5 );
-	group.add( circle4 );
-	
-	var readGeometry = new THREE.BoxBufferGeometry(200, 320, 1, 256, 325);
-	var readMesh = new THREE.Mesh(readGeometry, materials.read);
-	readMesh.castShadow = true;
-	//readMesh.receiveShadow = true;
-	group.add( readMesh );
-	readMesh.position.set( -300, 5, -0.5 );
-	readMesh.rotation.z = - 0.05*Math.PI;
+		}
+	),
+	line: new THREE.MeshPhongMaterial(
+		{
+			color: settings.lineColor,
+			shininess: 10,
+			shading: THREE.FlatShading
+		}
+	),
+	lineShort: new THREE.MeshPhongMaterial(
+		{
+			color: settings.lineShortColor,
+			shininess: 10,
+			shading: THREE.FlatShading
+		}
+	),
+	handHour: new THREE.MeshPhongMaterial(
+		{
+			color: settings.handHourColor,
+			shininess: 10,
+			shading: THREE.FlatShading
+		}
+	),
+	handMinute: new THREE.MeshPhongMaterial(
+		{
+			color: settings.handMinuteColor,
+			shininess: 10,
+			shading: THREE.FlatShading
+		}
+	),
+	handSecond: new THREE.MeshPhongMaterial(
+		{
+			color: settings.handSecondColor,
+			shininess: 10,
+			shading: THREE.FlatShading
+		}
+	),
+	handSecondCircle: new THREE.MeshPhongMaterial(
+		{
+			color: settings.handSecondCircleColor,
+			shininess: 10,
+			shading: THREE.FlatShading
+		}
+	),
+	spindle: new THREE.MeshPhongMaterial(
+		{
+			color: settings.spindleColor,
+			shininess: 10,
+			shading: THREE.FlatShading
+		}
+	),
+	read: new THREE.MeshPhongMaterial(
+		{
+			color      :  new THREE.Color("rgb(50,50,50)"),
+			emissive   :  new THREE.Color("rgb(7,3,5)"),
+			specular   :  new THREE.Color("rgb(20,20,20)"),
+			shininess  :  20,
+			map        :  new THREE.TextureLoader().load("obj/read_old.jpg", {}, function(){}),
+			bumpMap    :  new THREE.TextureLoader().load("obj/read.png"),
+			bumpScale  :  1
+		}
+	)
+};
 
-	//GUI
-	
-	var mouseX = 0;
-	var mouseXOnMouseDown = 0;
-	
-	var targetRotation = 0;
-	var targetRotationOnMouseDown = 0;
-	
-	var windowHalfX = window.innerWidth / 2;
-	var windowHalfY = window.innerHeight / 2;
-	
-	var timePassed = 0;
-	
-	var canvas = document.getElementsByTagName('canvas')[0];
-	
-	canvas.addEventListener( 'mousedown', onDocumentMouseDown, false );
-	
-	function onDocumentMouseDown( event ) {
-	
-		event.preventDefault();
-		canvas.addEventListener( 'mousemove', onDocumentMouseMove, false );
-		canvas.addEventListener( 'mouseup', onDocumentMouseUp, false );
-		canvas.addEventListener( 'mouseout', onDocumentMouseOut, false );
-		mouseXOnMouseDown = event.clientX - windowHalfX;
-		targetRotationOnMouseDown = targetRotation;
-	
+// Floor
+
+var oldWall = [];
+var wallWidth = 1000;
+var nWalls = 4;
+
+for(var i = 0; i < nWalls; i++){
+	for(var j = 0; j < nWalls; j++){
+		oldWall[i] = new THREE.Mesh( new THREE.PlaneBufferGeometry(wallWidth,wallWidth,1,1), materials.floor );
+		oldWall[i].castShadow = false;
+		oldWall[i].receiveShadow = true;
+		oldWall[i].position.x = -wallWidth + (i-1)*wallWidth;
+		oldWall[i].position.y = -wallWidth + (j-1)*wallWidth;
+		oldWall[i].translateZ(settings.floorZ);
+		group.add( oldWall[i] );
 	}
-	function onDocumentMouseMove( event ) {
-		mouseX = event.clientX - windowHalfX;
-		targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.02;
-	}
-	function onDocumentMouseUp( event ) {
-		canvas.removeEventListener( 'mousemove', onDocumentMouseMove, false );
-		canvas.removeEventListener( 'mouseup', onDocumentMouseUp, false );
-		canvas.removeEventListener( 'mouseout', onDocumentMouseOut, false );
-	}
-	function onDocumentMouseOut( event ) {
-		canvas.removeEventListener( 'mousemove', onDocumentMouseMove, false );
-		canvas.removeEventListener( 'mouseup', onDocumentMouseUp, false );
-		canvas.removeEventListener( 'mouseout', onDocumentMouseOut, false );
+}
+
+var clockWrapperGeometry = new THREE.TorusBufferGeometry(settings.bigRadius, 8, 10, 128);
+var clockWrapper = new THREE.Mesh( clockWrapperGeometry, materials.clockWrapper );
+clockWrapper.castShadow = true;
+group.add( clockWrapper );
+
+var clockGeometry = new THREE.CylinderBufferGeometry(settings.radius, settings.radius, settings.depthFace, 360);
+var clock = new THREE.Mesh( clockGeometry, materials.glass );
+clock.translateZ(0);
+clock.rotateX(Math.PI / 2);
+clock.castShadow = true;
+clock.receiveShadow = true;
+group.add( clock );
+
+var glassGeometry = new THREE.ConeBufferGeometry(settings.radius, 50, 100, 360);
+var glassMesh = new THREE.Mesh(glassGeometry, materials.glass );
+glassMesh.castShadow = false;
+glassMesh.receiveShadow = true;
+glassMesh.rotateX(Math.PI / 2);
+//group.add( glassMesh );
+glassMesh.position.set (0,0,25);
+
+
+var shortLines = [];
+
+for (var i = 0; i < settings.minutesNumber; i++) {
+	var lineGeometry = null;
+	var line = null;
+	var lineParent = new THREE.Group();
+	var lineAngle = (6 * Math.PI * i) / 180;
+
+	lineParent.rotateZ(lineAngle);
+
+	if(i % 5 === 0) {
+		lineGeometry = new THREE.BoxBufferGeometry( settings.lineWidthShort, settings.lineLengthShort, 1);
+		line = new THREE.Mesh( lineGeometry, materials.line );
+		line.translateOnAxis(new THREE.Vector3( 0, 1, 0 ), settings.radius - settings.lineLengthShort / 2 - settings.spacing );
+		line.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 );
+	} else {
+		lineGeometry = new THREE.BoxBufferGeometry( settings.lineWidthShortest, settings.lineLengthShortest, 1);
+		line = new THREE.Mesh( lineGeometry, materials.lineShort );
+		line.translateOnAxis(new THREE.Vector3( 0, 1, 0 ), settings.radius - settings.lineLengthShortest / 2 - settings.spacing );
+		line.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 );
 	}
 
-	var timePassed = 0;
+	lineParent.add(line);
+
+	line.castShadow = true;
+	line.receiveShadow = true;
+
+	shortLines.push(line);
+	group.add( lineParent );
+
+}
+
+settings.spacing = settings.radius - settings.lineLengthShort / 2 - settings.spacing;
+
+var boxGeometry3 = new THREE.BoxBufferGeometry( settings.lineWidthHandHour, settings.handHourLength, 1);
+var boxGeometry4 = new THREE.BoxBufferGeometry( settings.lineWidthHandMinute, settings.handMinuteLength, 1);
+var boxGeometry5 = new THREE.BoxBufferGeometry( settings.lineWidthHandSecond, settings.handSecondLength, 1);
+
+var handHourParent = new THREE.Object3D();
+var handMinuteParent = new THREE.Object3D();
+var handSecondParent = new THREE.Object3D();
+
+var handHour = new THREE.Mesh( boxGeometry3, materials.handHour );
+handHour.castShadow = true;
+handHour.receiveShadow = true;
+
+var handMinute = new THREE.Mesh( boxGeometry4, materials.handMinute );
+handMinute.castShadow = true;
+handMinute.receiveShadow = true;
+
+var handSecond = new THREE.Mesh( boxGeometry5, materials.handSecond );
+handSecond.castShadow = true;
+handSecond.receiveShadow = true;
+
+handHourParent.add(handHour);
+handMinuteParent.add(handMinute);
+handSecondParent.add(handSecond);
+
+handHour.translateOnAxis(new THREE.Vector3( 0, 1, 0 ), settings.handHourLength / 2 - settings.spacingHand );
+handMinute.translateOnAxis(new THREE.Vector3( 0, 1, 0 ), settings.handMinuteLength / 2 - settings.spacingHand );
+handSecond.translateOnAxis(new THREE.Vector3( 0, 1, 0 ), settings.handSecondLength / 2 - settings.spacingHand );
+
+handHour.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 + 2 );
+handMinute.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 + 3 );
+handSecond.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 + 4 );
+
+group.add( handHourParent );
+group.add( handMinuteParent );
+group.add( handSecondParent );
+
+var circleGeometry3 = new THREE.CircleBufferGeometry(settings.radiusSmall, 360 );
+var circle3 = new THREE.Mesh( circleGeometry3, materials.handSecondCircle);
+circle3.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 + 5 );
+group.add( circle3 );
+
+var circleGeometry4 = new THREE.CircleBufferGeometry(settings.radiusSmallest, 360 );
+var circle4 = new THREE.Mesh( circleGeometry4, materials.spindle);
+circle4.translateOnAxis(new THREE.Vector3( 0, 0, 1 ), settings.depthFace / 2 + 5 );
+group.add( circle4 );
+
+var readGeometry = new THREE.BoxBufferGeometry(200, 320, 1, 256, 325);
+var readMesh = new THREE.Mesh(readGeometry, materials.read);
+readMesh.castShadow = true;
+//readMesh.receiveShadow = true;
+group.add( readMesh );
+readMesh.position.set( -300, 5, -0.5 );
+readMesh.rotation.z = - 0.05*Math.PI;
+
+//GUI
+
+var mouseX = 0;
+var mouseXOnMouseDown = 0;
+
+var targetRotation = 0;
+var targetRotationOnMouseDown = 0;
+
+var windowHalfX = window.innerWidth / 2;
+var windowHalfY = window.innerHeight / 2;
+
+var timePassed = 0;
+
+var canvas = document.getElementsByTagName('canvas')[0];
+
+canvas.addEventListener( 'mousedown', onDocumentMouseDown, false );
+
+function onDocumentMouseDown( event ) {
+
+	event.preventDefault();
+	canvas.addEventListener( 'mousemove', onDocumentMouseMove, false );
+	canvas.addEventListener( 'mouseup', onDocumentMouseUp, false );
+	canvas.addEventListener( 'mouseout', onDocumentMouseOut, false );
+	mouseXOnMouseDown = event.clientX - windowHalfX;
+	targetRotationOnMouseDown = targetRotation;
+
+}
+function onDocumentMouseMove( event ) {
+	mouseX = event.clientX - windowHalfX;
+	targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.02;
+}
+function onDocumentMouseUp( event ) {
+	canvas.removeEventListener( 'mousemove', onDocumentMouseMove, false );
+	canvas.removeEventListener( 'mouseup', onDocumentMouseUp, false );
+	canvas.removeEventListener( 'mouseout', onDocumentMouseOut, false );
+}
+function onDocumentMouseOut( event ) {
+	canvas.removeEventListener( 'mousemove', onDocumentMouseMove, false );
+	canvas.removeEventListener( 'mouseup', onDocumentMouseUp, false );
+	canvas.removeEventListener( 'mouseout', onDocumentMouseOut, false );
+}
+
+var timePassed = 0;
 var date = new Date();
 
 var hrs = date.getHours();
@@ -586,25 +592,6 @@ var init_time = new Date().getTime() / 1000;
 var zoom_time = 3;
 
 var id;
-
-// div1 = document.createElement("div");
-// div1.style.position ="absolute";
-// div1.innerHTML = "text";
-// //div.backgroundColor = "white";
-// div1.style.top = "20%";
-// div1.style.left = "25%";
-// div1.style.color = "black";
-// div1.style.height ="10%";
-// div1.style.width ="50%";
-// div1.style.textAlign ="center";
-// div1.style.fontSize ="50px";
-// div1.style.xIndex =-150;
-// div1.style.yIndex =-185;
-// div1.style.zIndex =100;
-// div1.style.fontFamily = "Arial";
-// div1.setAttribute('id','anim');
-// document.body.appendChild(div1);
-
 
 //Foggy effect
 var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
