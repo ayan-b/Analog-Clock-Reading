@@ -6,9 +6,7 @@
 
 ## Usage
 
-First create a server. For example in python 3, you can create a server using the following command <code>python -m http.server 8000</code>.
-  
-You should rename the <code>index_true.html</code> to <code>index.html</code> and overwrite the existing <code>index.html</code> file.
+First navigate to the <code>Experiment</code> directory and create a server. For example in python 3, you can create a server using the following command <code>python -m http.server 8000</code>.
 
 Run <code>localhost:8000</code> in your browser.
 
